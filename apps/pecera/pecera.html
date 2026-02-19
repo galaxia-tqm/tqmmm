@@ -44,7 +44,7 @@
             display: inline-block;
             white-space: nowrap;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: clamp(11px, 3vw, 13px);
             color: white;
             animation: scroll-left 35s linear infinite;
         }
@@ -63,7 +63,7 @@
     border: none;
     color: white;
     font-family: 'Courier New', monospace;
-    font-size: 11px;
+    font-size: clamp(11px, 3vw, 13px);
     cursor: pointer;
     opacity: 0.4;
     letter-spacing: 0.1em;
@@ -93,7 +93,9 @@
     img.style.opacity = '0';
     img.style.animation = `fadein 3s ease-in-out ${i * 2.5}s forwards`;
 
-    const size = 150 + Math.random() * 200;
+    const minSize = window.innerWidth < 600 ? 120 : 150;
+    const maxSize = window.innerWidth < 600 ? 250 : 350;
+    const size = minSize + Math.random() * (maxSize - minSize);
     const speed = 0.1 + Math.random() * 1;
 
     img.style.width = size + 'px';
@@ -148,12 +150,16 @@
     const audio = document.getElementById('audio');
     const btn = document.getElementById('muteBtn');
     
-    audio.play();
+    audio.play().catch(() => {
+    document.addEventListener('touchstart', () => {
+        audio.play();
+    }, { once: true });
+});
 
-    btn.addEventListener('click', () => {
-        audio.muted = !audio.muted;
-        btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
-    });
+   btn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
+});
 </script>
     
 </body>
