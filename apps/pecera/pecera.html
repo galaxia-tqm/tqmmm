@@ -109,7 +109,7 @@
             img.style.width = size + 'px';
 
             const x = Math.random() * (window.innerWidth - size * 0.3);
-            const y = Math.random() * (window.innerHeight - 40) - size * 0.3);
+            const y = Math.random() * (window.innerHeight - 40) - size * 0.3;
 
             img.style.left = x + 'px';
             img.style.top = y + 'px';
@@ -147,17 +147,16 @@
             });
         });
 
-          // pause when phone locks or tab is hidden
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-    });
-
         const audio = document.getElementById('audio');
         const btn = document.getElementById('muteBtn');
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+        });
 
         document.body.addEventListener('click', () => { audio.play(); }, { once: true });
         document.body.addEventListener('touchstart', () => { audio.play(); }, { once: true });
