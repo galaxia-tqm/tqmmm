@@ -168,7 +168,7 @@
         <source src="/public/incompetech.mp3" type="audio/mpeg">
     </audio>
 
-    <script>
+   <script>
         const audio = document.getElementById('audio');
         const btn = document.getElementById('muteBtn');
         const landing = document.getElementById('landing');
@@ -176,20 +176,19 @@
         function entrar() {
             audio.play();
             landing.style.opacity = '0';
-            
-           setTimeout(() => { 
-            landing.style.display = 'none';
+            setTimeout(() => { 
+                landing.style.display = 'none';
             }, 1500);
-            
             setTimeout(() => {
-    const ticker = document.querySelector('.ticker-wrapper');
-    const tickerText = document.querySelector('.ticker-text');
-    ticker.style.animation = 'fadein 1s ease forwards';
-    tickerText.style.animation = 'none';
-    tickerText.offsetHeight; // force reflow
-    tickerText.style.animation = 'scroll-left 60s linear infinite';
-    tickerText.style.animationDelay = '0s';
-}, 12000);
+                const ticker = document.querySelector('.ticker-wrapper');
+                const tickerText = document.querySelector('.ticker-text');
+                ticker.style.animation = 'fadein 1s ease forwards';
+                tickerText.style.animation = 'none';
+                tickerText.offsetHeight;
+                tickerText.style.animation = 'scroll-left 60s linear infinite';
+                tickerText.style.animationDelay = '0s';
+            }, 12000);
+        }
 
         btn.addEventListener('click', () => {
             audio.muted = !audio.muted;
