@@ -235,26 +235,39 @@
                 vx: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
                 vy: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
                 size: size,
-                speed: speed
+                speed: speed,
+                rotation: 0,
+                rotationSpeed: 0
             };
 
              items.push(item);
 
             img.onload = function() {
                 function move() {
-                    item.vx += (Math.random() - 0.5) * 0.05;
-                    item.vy += (Math.random() - 0.5) * 0.05;
-                    item.vx = Math.max(-item.speed, Math.min(item.speed, item.vx));
-                    item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
-                    item.cx += item.vx;
-                    item.cy += item.vy;
-                    if (item.cx <= -item.size * 0.3 || item.cx + item.size >= window.innerWidth + item.size * 0.3) item.vx *= -1;
-                    if (item.cy <= -item.size * 0.3 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.3) item.vy *= -1;
-                    img.style.left = item.cx + 'px';
-                    img.style.top = item.cy + 'px';
-                    requestAnimationFrame(move);
-                }
-                move();
+    item.vx += (Math.random() - 0.5) * 0.05;
+    item.vy += (Math.random() - 0.5) * 0.05;
+    item.vx = Math.max(-item.speed, Math.min(item.speed, item.vx));
+    item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
+    item.cx += item.vx;
+    item.cy += item.vy;
+
+    if (item.cx <= -item.size * 0.3 || item.cx + item.size >= window.innerWidth + item.size * 0.3) {
+        item.vx *= -1;
+        item.rotationSpeed = (Math.random() - 0.5) * 2;
+    }
+    if (item.cy <= -item.size * 0.3 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.3) {
+        item.vy *= -1;
+        item.rotationSpeed = (Math.random() - 0.5) * 2;
+    }
+
+    item.rotation += item.rotationSpeed;
+    item.rotationSpeed *= 0.95;
+    img.style.transform = `rotate(${item.rotation}deg)`;
+    img.style.left = item.cx + 'px';
+    img.style.top = item.cy + 'px';
+    requestAnimationFrame(move);
+}
+move();
             };
         }
 
