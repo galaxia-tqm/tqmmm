@@ -188,7 +188,7 @@
             img.style.userSelect = 'none';
             img.style.opacity = '0';
 
-            const delayTime = isMobile ? i * 3 : i * 2.5;
+            const delayTime = isMobile ? 2 + i * 3 : 2 + i * 2.5;
             img.style.animation = `fadein 3s ease-in-out ${delayTime}s forwards`;
 
             const minSize = isMobile ? 180 : 150;
