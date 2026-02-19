@@ -183,6 +183,7 @@
 setTimeout(() => {
     const ticker = document.querySelector('.ticker-wrapper');
     const tickerText = document.querySelector('.ticker-text');
+    tickerText.style.transform = 'translateX(100vw)';
     ticker.style.animation = 'fadein 1s ease forwards';
     tickerText.style.animation = 'scroll-left 60s linear infinite';
 }, 12000);
