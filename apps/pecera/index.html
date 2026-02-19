@@ -28,14 +28,18 @@
         const img = document.createElement('img');
         img.src = "/public/images/trash/trash-" + i + ".png";
         img.style.position = 'absolute';
-        img.style.width = '140px';
         img.style.cursor = 'grab';
         img.style.userSelect = 'none';
 
-        const x = Math.random() * (window.innerWidth - 140);
-        const y = Math.random() * (window.innerHeight - 140);
-        let vx = (Math.random() - 0.5) * 2;
-        let vy = (Math.random() - 0.5) * 2;
+        const size = 80 + Math.random() * 120; // random size between 80px and 200px
+        const speed = 0.5 + Math.random() * 3;  // random speed
+
+        img.style.width = size + 'px';
+
+        const x = Math.random() * (window.innerWidth - size);
+        const y = Math.random() * (window.innerHeight - size);
+        let vx = (Math.random() - 0.5) * 2 * speed;
+        let vy = (Math.random() - 0.5) * 2 * speed;
 
         img.style.left = x + 'px';
         img.style.top = y + 'px';
@@ -44,8 +48,8 @@
         let cx = x, cy = y;
         function move() {
             cx += vx; cy += vy;
-            if (cx <= 0 || cx + 140 >= window.innerWidth) vx *= -1;
-            if (cy <= 0 || cy + 140 >= window.innerHeight) vy *= -1;
+            if (cx <= 0 || cx + size >= window.innerWidth) vx *= -1;
+            if (cy <= 0 || cy + size >= window.innerHeight) vy *= -1;
             img.style.left = cx + 'px';
             img.style.top = cy + 'px';
             requestAnimationFrame(move);
