@@ -149,13 +149,11 @@
 <script>
     const audio = document.getElementById('audio');
     const btn = document.getElementById('muteBtn');
-    
-    audio.play().catch(() => {
-    document.addEventListener('touchstart', () => {
-        audio.play();
-    }, { once: true });
-});
 
+    window.addEventListener('load', () => {
+    audio.play();
+});
+    
    btn.addEventListener('click', () => {
     audio.muted = !audio.muted;
     btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
