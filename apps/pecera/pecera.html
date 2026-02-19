@@ -176,7 +176,7 @@
         const items = [];
         const isMobile = window.innerWidth < 600;
 
-        const order = Array.from({length: count}, (_, i) => i + 1)
+          const order = Array.from({length: count}, (_, i) => i + 1)
             .sort(() => Math.random() - 0.5);
 
         for (let i = 0; i < count; i++) {
@@ -188,39 +188,36 @@
             img.style.userSelect = 'none';
             img.style.opacity = '0';
 
-            const delayTime = isMobile ? 2 + i * 3 : 2 + i * 2.5;
-            const finalDelay = Math.random() > 0.7 ? delayTime - 1.5 : delayTime;
+            // occasionally pair two images at same delay
+            const baseDelay = isMobile ? 2 + i * 3 : 2 + i * 2.5;
+            const finalDelay = (i > 0 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
             img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
             const minSize = isMobile ? 180 : 150;
             const maxSize = isMobile ? 300 : 350;
             const size = minSize + Math.random() * (maxSize - minSize);
-            const speed = 0.1 + Math.random() * 1;
+            const speed = 0.3 + Math.random() * 0.8;
 
             img.style.width = size + 'px';
 
-            const x = isMobile 
-                ? Math.random() * (window.innerWidth - size) 
-                : Math.random() * window.innerWidth - size * 0.2;
-            const y = isMobile 
-                ? Math.random() * (window.innerHeight - size - 40) 
-                : Math.random() * (window.innerHeight - 40) - size * 0.2;
+            const x = Math.random() * Math.max(0, window.innerWidth - size);
+            const y = Math.random() * Math.max(0, window.innerHeight - size - 40);
 
             img.style.left = x + 'px';
             img.style.top = y + 'px';
             document.body.appendChild(img);
 
-            const item = {
+        const item = {
                 el: img,
                 cx: x,
                 cy: y,
-                vx: (Math.random() - 0.5) * 2 * speed,
-                vy: (Math.random() - 0.5) * 2 * speed,
+                vx: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
+                vy: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
                 size: size,
                 speed: speed
             };
 
-            items.push(item);
+             items.push(item);
 
             img.onload = function() {
                 function move() {
@@ -230,8 +227,8 @@
                     item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
                     item.cx += item.vx;
                     item.cy += item.vy;
-                    if (item.cx <= -item.size * 0.2 || item.cx + item.size >= window.innerWidth + item.size * 0.2) item.vx *= -1;
-                    if (item.cy <= -item.size * 0.2 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.2) item.vy *= -1;
+                    if (item.cx <= 0 || item.cx + item.size >= window.innerWidth) item.vx *= -1;
+                    if (item.cy <= 0 || item.cy + item.size >= window.innerHeight - 40) item.vy *= -1;
                     img.style.left = item.cx + 'px';
                     img.style.top = item.cy + 'px';
                     requestAnimationFrame(move);
@@ -240,7 +237,7 @@
             };
         }
 
-        window.addEventListener('resize', () => {
+       window.addEventListener('resize', () => {
             items.forEach(item => {
                 if (item.cx + item.size > window.innerWidth) item.cx = window.innerWidth - item.size;
                 if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
