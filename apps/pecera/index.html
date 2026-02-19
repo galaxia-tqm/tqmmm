@@ -1,1 +1,36 @@
-<meta http-equiv="refresh" content="0; url=/apps/pecera/index.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: white; margin: 0; overflow: hidden; height: 100vh; }
+        .trash { position: absolute; width: 150px; cursor: grab; transition: transform 0.2s; }
+        
+        /* This makes them float and drift slowly */
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(100px, 50px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // This loop automatically adds your 46 basuritas
+        for (let i = 1; i <= 46; i++) {
+            const img = document.createElement('img');
+            img.src = `/images/trash/trash-${i}.png`;
+            img.className = 'trash';
+            
+            // Randomly scatter them across the screen
+            img.style.left = Math.random() * 90 + 'vw';
+            img.style.top = Math.random() * 90 + 'vh';
+            
+            // Give each one a different floating speed
+            img.style.animation = `float ${10 + Math.random() * 20}s infinite ease-in-out`;
+            img.style.animationDelay = `-${Math.random() * 20}s`;
+            
+            document.body.appendChild(img);
+        }
+    </script>
+</body>
+</html>
