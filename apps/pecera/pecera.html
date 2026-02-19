@@ -168,127 +168,127 @@
         <source src="/public/incompetech.mp3" type="audio/mpeg">
     </audio>
 
-   <script>
-        const audio = document.getElementById('audio');
-        const btn = document.getElementById('muteBtn');
-        const landing = document.getElementById('landing');
+ <script>
+    const audio = document.getElementById('audio');
+    const btn = document.getElementById('muteBtn');
+    const landing = document.getElementById('landing');
 
-        function entrar() {
+    function entrar() {
+        audio.play();
+        landing.style.opacity = '0';
+        setTimeout(() => { 
+            landing.style.display = 'none';
+        }, 1500);
+        setTimeout(() => {
+            const ticker = document.querySelector('.ticker-wrapper');
+            const tickerText = document.querySelector('.ticker-text');
+            ticker.style.animation = 'fadein 1s ease forwards';
+            tickerText.style.animation = 'none';
+            tickerText.offsetHeight;
+            tickerText.style.animation = 'scroll-left 60s linear infinite';
+            tickerText.style.animationDelay = '0s';
+        }, 12000);
+    }
+
+    btn.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            audio.pause();
+        } else {
             audio.play();
-            landing.style.opacity = '0';
-            setTimeout(() => { 
-                landing.style.display = 'none';
-            }, 1500);
-            setTimeout(() => {
-                const ticker = document.querySelector('.ticker-wrapper');
-                const tickerText = document.querySelector('.ticker-text');
-                ticker.style.animation = 'fadein 1s ease forwards';
-                tickerText.style.animation = 'none';
-                tickerText.offsetHeight;
-                tickerText.style.animation = 'scroll-left 60s linear infinite';
-                tickerText.style.animationDelay = '0s';
-            }, 12000);
         }
+    });
 
-        btn.addEventListener('click', () => {
-            audio.muted = !audio.muted;
-            btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
-        });
+    const count = 46;
+    const items = [];
+    const isMobile = window.innerWidth < 600;
 
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-        });
+    const order = Array.from({length: count}, (_, i) => i + 1)
+        .sort(() => Math.random() - 0.5);
 
-        const count = 46;
-        const items = [];
-        const isMobile = window.innerWidth < 600;
+    for (let i = 0; i < count; i++) {
+        const num = order[i];
+        const img = document.createElement('img');
+        img.src = "/public/images/trash/trash-" + num + ".png";
+        img.style.position = 'absolute';
+        img.style.cursor = 'grab';
+        img.style.userSelect = 'none';
+        img.style.opacity = '0';
 
-          const order = Array.from({length: count}, (_, i) => i + 1)
-            .sort(() => Math.random() - 0.5);
+        const baseDelay = isMobile ? 4 + i * 3 : 4 + i * 2.5;
+        const finalDelay = (i > 3 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
+        img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
-        for (let i = 0; i < count; i++) {
-            const num = order[i];
-            const img = document.createElement('img');
-            img.src = "/public/images/trash/trash-" + num + ".png";
-            img.style.position = 'absolute';
-            img.style.cursor = 'grab';
-            img.style.userSelect = 'none';
-            img.style.opacity = '0';
+        const minSize = isMobile ? 200 : 250;
+        const maxSize = isMobile ? 340 : 450;
+        const size = minSize + Math.random() * (maxSize - minSize);
+        const speed = 0.3 + Math.random() * 0.8;
 
-            // occasionally pair two images at same delay
-            const baseDelay = isMobile ? 4 + i * 3 : 4 + i * 2.5;
-            const finalDelay = (i > 3 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
-            img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
+        img.style.width = size + 'px';
 
-            const minSize = isMobile ? 200 : 250;
-            const maxSize = isMobile ? 340 : 450;
-            const size = minSize + Math.random() * (maxSize - minSize);
-            const speed = 0.3 + Math.random() * 0.8;
+        const x = Math.random() * Math.max(0, window.innerWidth - size);
+        const y = Math.random() * Math.max(0, window.innerHeight - size - 40);
 
-            img.style.width = size + 'px';
-
-            const x = Math.random() * Math.max(0, window.innerWidth - size);
-            const y = Math.random() * Math.max(0, window.innerHeight - size - 40);
-
-            img.style.left = x + 'px';
-            img.style.top = y + 'px';
-            document.body.appendChild(img);
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
+        document.body.appendChild(img);
 
         const item = {
-                el: img,
-                cx: x,
-                cy: y,
-                vx: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
-                vy: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
-                size: size,
-                speed: speed,
-                rotation: 0,
-                rotationSpeed: 0
-            };
+            el: img,
+            cx: x,
+            cy: y,
+            vx: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
+            vy: (Math.random() < 0.5 ? 1 : -1) * (0.3 + Math.random() * 0.8),
+            size: size,
+            speed: speed,
+            rotation: 0,
+            rotationSpeed: 0
+        };
 
-             items.push(item);
+        items.push(item);
 
-            img.onload = function() {
-                function move() {
-    item.vx += (Math.random() - 0.5) * 0.01;
-    item.vy += (Math.random() - 0.5) * 0.01;
-    item.vx = Math.max(-item.speed, Math.min(item.speed, item.vx));
-    item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
-    item.cx += item.vx;
-    item.cy += item.vy;
+        img.onload = function() {
+            function move() {
+                item.vx += (Math.random() - 0.5) * 0.01;
+                item.vy += (Math.random() - 0.5) * 0.01;
+                item.vx = Math.max(-item.speed, Math.min(item.speed, item.vx));
+                item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
+                item.cx += item.vx;
+                item.cy += item.vy;
 
-    if (item.cx <= -item.size * 0.3 || item.cx + item.size >= window.innerWidth + item.size * 0.3) {
-        item.vx *= -1;
-        item.rotationSpeed = (Math.random() - 0.5) * 2;
+                if (item.cx <= -item.size * 0.3 || item.cx + item.size >= window.innerWidth + item.size * 0.3) {
+                    item.vx *= -1;
+                    item.rotationSpeed = (Math.random() - 0.5) * 2;
+                }
+                if (item.cy <= -item.size * 0.3 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.3) {
+                    item.vy *= -1;
+                    item.rotationSpeed = (Math.random() - 0.5) * 2;
+                }
+
+                item.rotation += item.rotationSpeed;
+                item.rotationSpeed *= 0.95;
+                img.style.transform = `rotate(${item.rotation}deg)`;
+                img.style.left = item.cx + 'px';
+                img.style.top = item.cy + 'px';
+                requestAnimationFrame(move);
+            }
+            move();
+        };
     }
-    if (item.cy <= -item.size * 0.3 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.3) {
-        item.vy *= -1;
-        item.rotationSpeed = (Math.random() - 0.5) * 2;
-    }
 
-    item.rotation += item.rotationSpeed;
-    item.rotationSpeed *= 0.95;
-    img.style.transform = `rotate(${item.rotation}deg)`;
-    img.style.left = item.cx + 'px';
-    img.style.top = item.cy + 'px';
-    requestAnimationFrame(move);
-}
-move();
-            };
-        }
-
-       window.addEventListener('resize', () => {
-            items.forEach(item => {
-                if (item.cx + item.size > window.innerWidth) item.cx = window.innerWidth - item.size;
-                if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
-            });
+    window.addEventListener('resize', () => {
+        items.forEach(item => {
+            if (item.cx + item.size > window.innerWidth) item.cx = window.innerWidth - item.size;
+            if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
         });
+    });
+</script>
 
-     </script>
+
 
 </body>
 </html>
