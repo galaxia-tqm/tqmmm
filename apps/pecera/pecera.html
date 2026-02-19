@@ -227,8 +227,8 @@
                     item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
                     item.cx += item.vx;
                     item.cy += item.vy;
-                    if (item.cx <= 0 || item.cx + item.size >= window.innerWidth) item.vx *= -1;
-                    if (item.cy <= 0 || item.cy + item.size >= window.innerHeight - 40) item.vy *= -1;
+                    if (item.cx <= -item.size * 0.3 || item.cx + item.size >= window.innerWidth + item.size * 0.3) item.vx *= -1;
+                    if (item.cy <= -item.size * 0.3 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.3) item.vy *= -1;
                     img.style.left = item.cx + 'px';
                     img.style.top = item.cy + 'px';
                     requestAnimationFrame(move);
