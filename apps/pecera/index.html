@@ -21,20 +21,58 @@
     </style>
 </head>
 <body>
-    <script>
-        for (let i = 1; i <= 46; i++) {
-            const img = document.createElement('img');
-            // This is the "hidden" path
-            img.src = "/public/images/trash/trash-" + i + ".png"; 
-            img.className = 'trash';
-            
-            img.style.left = Math.random() * 80 + 'vw';
-            img.style.top = Math.random() * 80 + 'vh';
-            img.style.animation = `drift ${18 + Math.random() * 20}s infinite ease-in-out`;
-            img.style.animationDelay = `-${Math.random() * 20}s`;
-            
-            document.body.appendChild(img);
+  <script>
+    const items = [];
+    const count = 15; // change to however many images you have
+
+    for (let i = 1; i <= count; i++) {
+        const img = document.createElement('img');
+        img.src = "/public/images/trash/trash-" + i + ".png";
+        img.className = 'trash';
+        img.style.position = 'absolute';
+        img.style.width = '140px';
+        img.style.cursor = 'grab';
+        img.style.userSelect = 'none';
+
+        document.body.appendChild(img);
+
+        items.push({
+            el: img,
+            x: Math.random() * (window.innerWidth - 140),
+            y: Math.random() * (window.innerHeight - 140),
+            vx: (Math.random() - 0.5) * 3,
+            vy: (Math.random() - 0.5) * 3,
+            w: 140,
+            h: 140
+        });
+    }
+
+    function animate() {
+        for (let a of items) {
+            a.x += a.vx;
+            a.y += a.vy;
+
+            // bounce off walls
+            if (a.x <= 0 || a.x + a.w >= window.innerWidth) a.vx *= -1;
+            if (a.y <= 0 || a.y + a.h >= window.innerHeight) a.vy *= -1;
+
+            // bounce off each other
+            for (let b of items) {
+                if (a === b) continue;
+                if (a.x < b.x + b.w && a.x + a.w > b.x &&
+                    a.y < b.y + b.h && a.y + a.h > b.y) {
+                    a.vx *= -1;
+                    a.vy *= -1;
+                }
+            }
+
+            a.el.style.left = a.x + 'px';
+            a.el.style.top = a.y + 'px';
         }
-    </script>
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
 </body>
 </html>
