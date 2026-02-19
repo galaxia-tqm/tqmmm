@@ -104,8 +104,8 @@
     img.style.opacity = '0';
     img.style.animation = `fadein 3s ease-in-out ${i * 2.5}s forwards`;
 
-    const minSize = window.innerWidth < 600 ? 120 : 150;
-    const maxSize = window.innerWidth < 600 ? 250 : 350;
+    const minSize = window.innerWidth < 600 ? 200 : 150;
+    const maxSize = window.innerWidth < 600 ? 380 : 350;
     const size = minSize + Math.random() * (maxSize - minSize);
     const speed = 0.1 + Math.random() * 1;
 
