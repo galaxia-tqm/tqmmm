@@ -5,7 +5,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            background: teal; 
+            background: black; 
             overflow: hidden; 
             height: 100vh; 
             width: 100vw; 
@@ -28,7 +28,7 @@
             font-family: 'Courier New', monospace;
             font-size: 13px;
             color: white;
-            animation: scroll-left 20s linear infinite;
+            animation: scroll-left 35s linear infinite;
         }
 
         @keyframes scroll-left {
@@ -57,7 +57,7 @@
             img.style.userSelect = 'none';
 
             const size = 150 + Math.random() * 120;
-            const speed = 0.3 + Math.random() * 3;
+            const speed = 0.1 + Math.random() * 3;
 
             img.style.width = size + 'px';
 
