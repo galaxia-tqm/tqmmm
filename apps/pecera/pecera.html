@@ -177,9 +177,9 @@
         const isMobile = window.innerWidth < 600;
 
         const order = Array.from({length: count}, (_, i) => i + 1)
-        .sort(() => Math.random() - 0.5);
+            .sort(() => Math.random() - 0.5);
 
-            for (let i = 0; i < count; i++) {
+        for (let i = 0; i < count; i++) {
             const num = order[i];
             const img = document.createElement('img');
             img.src = "/public/images/trash/trash-" + num + ".png";
@@ -189,7 +189,8 @@
             img.style.opacity = '0';
 
             const delayTime = isMobile ? 2 + i * 3 : 2 + i * 2.5;
-            img.style.animation = `fadein 3s ease-in-out ${delayTime}s forwards`;
+            const finalDelay = Math.random() > 0.7 ? delayTime - 1.5 : delayTime;
+            img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
             const minSize = isMobile ? 180 : 150;
             const maxSize = isMobile ? 300 : 350;
@@ -201,7 +202,6 @@
             const x = isMobile 
                 ? Math.random() * (window.innerWidth - size) 
                 : Math.random() * window.innerWidth - size * 0.2;
-
             const y = isMobile 
                 ? Math.random() * (window.innerHeight - size - 40) 
                 : Math.random() * (window.innerHeight - 40) - size * 0.2;
@@ -216,13 +216,18 @@
                 cy: y,
                 vx: (Math.random() - 0.5) * 2 * speed,
                 vy: (Math.random() - 0.5) * 2 * speed,
-                size: size
+                size: size,
+                speed: speed
             };
 
             items.push(item);
 
             img.onload = function() {
                 function move() {
+                    item.vx += (Math.random() - 0.5) * 0.05;
+                    item.vy += (Math.random() - 0.5) * 0.05;
+                    item.vx = Math.max(-item.speed, Math.min(item.speed, item.vx));
+                    item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
                     item.cx += item.vx;
                     item.cy += item.vy;
                     if (item.cx <= -item.size * 0.2 || item.cx + item.size >= window.innerWidth + item.size * 0.2) item.vx *= -1;
@@ -241,7 +246,8 @@
                 if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
             });
         });
-    </script>
+
+     </script>
 
 </body>
 </html>
