@@ -189,7 +189,7 @@
             img.style.opacity = '0';
 
             // occasionally pair two images at same delay
-            const baseDelay = isMobile ? 2 + i * 3 : 2 + i * 2.5;
+            const baseDelay = isMobile ? 4 + i * 3 : 4 + i * 2.5;
             const finalDelay = (i > 0 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
             img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
