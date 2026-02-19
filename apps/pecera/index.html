@@ -21,58 +21,37 @@
     </style>
 </head>
 <body>
-  <script>
-    const items = [];
-    const count = 46; // change to however many images you have
+ <script>
+    const count = 15;
 
     for (let i = 1; i <= count; i++) {
         const img = document.createElement('img');
         img.src = "/public/images/trash/trash-" + i + ".png";
-        img.className = 'trash';
         img.style.position = 'absolute';
         img.style.width = '140px';
         img.style.cursor = 'grab';
         img.style.userSelect = 'none';
 
+        const x = Math.random() * (window.innerWidth - 140);
+        const y = Math.random() * (window.innerHeight - 140);
+        let vx = (Math.random() - 0.5) * 2;
+        let vy = (Math.random() - 0.5) * 2;
+
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
         document.body.appendChild(img);
 
-        items.push({
-            el: img,
-            x: Math.random() * (window.innerWidth - 140),
-            y: Math.random() * (window.innerHeight - 140),
-            vx: (Math.random() - 0.5) * 3,
-            vy: (Math.random() - 0.5) * 3,
-            w: 140,
-            h: 140
-        });
-    }
-
-    function animate() {
-        for (let a of items) {
-            a.x += a.vx;
-            a.y += a.vy;
-
-            // bounce off walls
-            if (a.x <= 0 || a.x + a.w >= window.innerWidth) a.vx *= -1;
-            if (a.y <= 0 || a.y + a.h >= window.innerHeight) a.vy *= -1;
-
-            // bounce off each other
-            for (let b of items) {
-                if (a === b) continue;
-                if (a.x < b.x + b.w && a.x + a.w > b.x &&
-                    a.y < b.y + b.h && a.y + a.h > b.y) {
-                    a.vx *= -1;
-                    a.vy *= -1;
-                }
-            }
-
-            a.el.style.left = a.x + 'px';
-            a.el.style.top = a.y + 'px';
+        let cx = x, cy = y;
+        function move() {
+            cx += vx; cy += vy;
+            if (cx <= 0 || cx + 140 >= window.innerWidth) vx *= -1;
+            if (cy <= 0 || cy + 140 >= window.innerHeight) vy *= -1;
+            img.style.left = cx + 'px';
+            img.style.top = cy + 'px';
+            requestAnimationFrame(move);
         }
-        requestAnimationFrame(animate);
+        img.onload = move;
     }
-
-    animate();
 </script>
 </body>
 </html>
