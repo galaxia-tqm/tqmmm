@@ -53,6 +53,22 @@
             0%   { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
         }
+
+        #muteBtn {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 200;
+    background: none;
+    border: none;
+    color: white;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    opacity: 0.4;
+    letter-spacing: 0.1em;
+}
+#muteBtn:hover { opacity: 1; }
     
     </style>
 </head>
@@ -125,5 +141,16 @@
     <source src="/public/incompetech.mp3" type="audio/mpeg">
     
 </audio>
+<button id="muteBtn">♪ off</button>
+
+<script>
+    const audio = document.querySelector('audio');
+    const btn = document.getElementById('muteBtn');
+    btn.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        btn.textContent = audio.muted ? '♪ on' : '♪ off';
+    });
+</script>
+    
 </body>
 </html>
