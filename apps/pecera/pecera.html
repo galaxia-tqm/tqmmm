@@ -12,21 +12,20 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body { 
-            background: black; 
-            animation: bgshift 90s ease-in-out infinite alternate;
-            overflow: hidden; 
-            height: 100vh; 
-            width: 100vw; 
-            filter: contrast(1.2) brightness(0.9) saturate(1.4) blur(0.4px);
-        }
+    background: black; 
+    animation: bgshift 90s ease-in-out infinite alternate;
+    overflow: hidden; 
+    height: 100vh; 
+    width: 100vw; 
+}
 
-        body::after {
-    content: '';
+#overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     pointer-events: none;
-    z-index: 999;
+    z-index: 998;
+    filter: contrast(1.2) brightness(0.9) saturate(1.4) blur(0.4px);
     background: repeating-linear-gradient(
         0deg,
         rgba(0,0,0,0.10) 0px,
@@ -34,7 +33,8 @@
         transparent 1px,
         transparent 3px
     );
-            }
+}
+            
 
         @keyframes bgshift {
             0%   { background: #000000; }
@@ -149,6 +149,7 @@
     </style>
 </head>
 <body>
+ <div id="overlay"></div>
 
     <!-- LANDING OVERLAY -->
     <div id="landing">
