@@ -54,7 +54,7 @@
             100% { transform: translateX(-100%); }
         }
 
-        #muteBtn {
+       #muteBtn {
     position: fixed;
     top: 12px;
     right: 16px;
@@ -138,15 +138,18 @@
     });
 </script>
     
-<audio autoplay loop>
+<audio id="audio" loop>
     <source src="/public/incompetech.mp3" type="audio/mpeg">
-    
 </audio>
+    
 <button id="muteBtn">♪ off</button>
 
 <script>
-    const audio = document.querySelector('audio');
+    const audio = document.getElementById('audio');
     const btn = document.getElementById('muteBtn');
+    
+    audio.play();
+
     btn.addEventListener('click', () => {
         audio.muted = !audio.muted;
         btn.textContent = audio.muted ? '♪ on' : '♪ off';
