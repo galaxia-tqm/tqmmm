@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>pecera basurera</title>
-     <!-- 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
         "Valse Gymnopedie" Kevin MacLeod (incompetech.com)
         Licensed under Creative Commons: By Attribution 4.0 License
         http://creativecommons.org/licenses/by/4.0/
@@ -16,19 +17,16 @@
             height: 100vh; 
             width: 100vw; 
         }
-
-       @keyframes bgshift {
-    0%   { background: #000000; }
-    33%  { background: #002b2b; }
-    66%  { background: #150035; }
-    100% { background: #002b10; }
-}
-
+        @keyframes bgshift {
+            0%   { background: #000000; }
+            33%  { background: #002b2b; }
+            66%  { background: #150035; }
+            100% { background: #002b10; }
+        }
         @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
         .ticker-wrapper {
             position: fixed;
             bottom: 0;
@@ -39,48 +37,38 @@
             overflow: hidden;
             z-index: 100;
         }
-
         .ticker-text {
             display: inline-block;
             white-space: nowrap;
             font-family: 'Courier New', monospace;
-            font-size: clamp(13px, 4vw, 16px);
             color: white;
             animation: scroll-left 35s linear infinite;
+            font-size: 13px;
         }
-
         @keyframes scroll-left {
             0%   { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
         }
-
-       #muteBtn {
-    position: fixed;
-    top: 12px;
-    right: 16px;
-    z-index: 200;
-    background: none;
-    border: none;
-    color: white;
-    font-family: 'Courier New', monospace;
-    font-size: clamp(13px, 4vw, 16px);
-    cursor: pointer;
-    opacity: 0.4;
-    letter-spacing: 0.1em;
-}
-#muteBtn:hover { opacity: 1; }
+        #muteBtn {
+            position: fixed;
+            top: 12px;
+            right: 16px;
+            z-index: 200;
+            background: none;
+            border: none;
+            color: white;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            opacity: 0.4;
+            letter-spacing: 0.1em;
+            font-size: 13px;
+        }
+        #muteBtn:hover { opacity: 1; }
 
         @media (max-width: 600px) {
-    .ticker-text {
-        font-size: 14px;
-    }
-    #muteBtn {
-        font-size: 14px;
-        top: 16px;
-        right: 16px;
-    }
-}
-    
+            .ticker-text { font-size: 16px; }
+            #muteBtn { font-size: 16px; }
+        }
     </style>
 </head>
 <body>
@@ -91,91 +79,85 @@
         </span>
     </div>
 
+    <button id="muteBtn">♪ apagar</button>
+
+    <audio id="audio" loop>
+        <source src="/public/incompetech.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-    const count = 46;
-    const items = [];
-   
-    for (let i = 1; i <= count; i++) {
-    const img = document.createElement('img');
-    img.src = "/public/images/trash/trash-" + i + ".png";
-    img.style.position = 'absolute';
-    img.style.cursor = 'grab';
-    img.style.userSelect = 'none';
-    img.style.opacity = '0';
-    img.style.animation = `fadein 3s ease-in-out ${i * 2.5}s forwards`;
+        const count = 46;
+        const items = [];
+        const isMobile = window.innerWidth < 600;
 
-    const minSize = window.innerWidth < 600 ? 280 : 150;
-    const maxSize = window.innerWidth < 600 ? 500 : 350;
-    const size = minSize + Math.random() * (maxSize - minSize);
-    const speed = 0.1 + Math.random() * 1;
+        for (let i = 1; i <= count; i++) {
+            const img = document.createElement('img');
+            img.src = "/public/images/trash/trash-" + i + ".png";
+            img.style.position = 'absolute';
+            img.style.cursor = 'grab';
+            img.style.userSelect = 'none';
+            img.style.opacity = '0';
 
-    img.style.width = size + 'px';
+            const delayTime = isMobile ? i * 1.2 : i * 2.5;
+            img.style.animation = `fadein 3s ease-in-out ${delayTime}s forwards`;
 
-    const x = Math.random() * (window.innerWidth - size);
-    const y = Math.random() * (window.innerHeight - size - 40);
+            const minSize = isMobile ? 350 : 150;
+            const maxSize = isMobile ? 600 : 350;
+            const size = minSize + Math.random() * (maxSize - minSize);
+            const speed = 0.1 + Math.random() * 1;
 
-    img.style.left = x + 'px';
-    img.style.top = y + 'px';
-    document.body.appendChild(img);
+            img.style.width = size + 'px';
 
-    const item = {
-            el: img,
-            cx: x,
-            cy: y,
-            vx: (Math.random() - 0.5) * 2 * speed,
-            vy: (Math.random() - 0.5) * 2 * speed,
-            size: size
-        };
+            const x = Math.random() * (window.innerWidth - size);
+            const y = Math.random() * (window.innerHeight - size - 40);
 
-        items.push(item);
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+            document.body.appendChild(img);
 
-        img.onload = function() {
-            function move() {
-                item.cx += item.vx;
-                item.cy += item.vy;
-                if (item.cx <= 0 || item.cx + item.size >= window.innerWidth) item.vx *= -1;
-                if (item.cy <= 0 || item.cy + item.size >= window.innerHeight - 40) item.vy *= -1;
-                img.style.left = item.cx + 'px';
-                img.style.top = item.cy + 'px';
-                requestAnimationFrame(move);
-            }
-            move();
-        };
-    }
+            const item = {
+                el: img,
+                cx: x,
+                cy: y,
+                vx: (Math.random() - 0.5) * 2 * speed,
+                vy: (Math.random() - 0.5) * 2 * speed,
+                size: size
+            };
 
-    window.addEventListener('resize', () => {
-        items.forEach(item => {
-            if (item.cx + item.size > window.innerWidth) item.cx = window.innerWidth - item.size;
-            if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
+            items.push(item);
+
+            img.onload = function() {
+                function move() {
+                    item.cx += item.vx;
+                    item.cy += item.vy;
+                    if (item.cx <= 0 || item.cx + item.size >= window.innerWidth) item.vx *= -1;
+                    if (item.cy <= 0 || item.cy + item.size >= window.innerHeight - 40) item.vy *= -1;
+                    img.style.left = item.cx + 'px';
+                    img.style.top = item.cy + 'px';
+                    requestAnimationFrame(move);
+                }
+                move();
+            };
+        }
+
+        window.addEventListener('resize', () => {
+            items.forEach(item => {
+                if (item.cx + item.size > window.innerWidth) item.cx = window.innerWidth - item.size;
+                if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
+            });
         });
-    });
-</script>
-    
-<audio id="audio" loop>
-    <source src="/public/incompetech.mp3" type="audio/mpeg">
-</audio>
-    
-<button id="muteBtn">♪ apagar</button>
 
-<script>
+        const audio = document.getElementById('audio');
+        const btn = document.getElementById('muteBtn');
 
-    const audio = document.getElementById('audio');
-const btn = document.getElementById('muteBtn');
+        document.body.addEventListener('click', () => { audio.play(); }, { once: true });
+        document.body.addEventListener('touchstart', () => { audio.play(); }, { once: true });
 
-document.body.addEventListener('click', () => {
-    audio.play();
-}, { once: true });
+        btn.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
+        });
+    </script>
 
-document.body.addEventListener('touchstart', () => {
-    audio.play();
-}, { once: true });
-
-btn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
-});
-    
-</script>
-    
 </body>
 </html>
