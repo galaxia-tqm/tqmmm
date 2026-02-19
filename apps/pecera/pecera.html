@@ -176,9 +176,13 @@
         const items = [];
         const isMobile = window.innerWidth < 600;
 
-        for (let i = 1; i <= count; i++) {
+        const order = Array.from({length: count}, (_, i) => i + 1)
+        .sort(() => Math.random() - 0.5);
+
+            for (let i = 0; i < count; i++) {
+            const num = order[i];
             const img = document.createElement('img');
-            img.src = "/public/images/trash/trash-" + i + ".png";
+            img.src = "/public/images/trash/trash-" + num + ".png";
             img.style.position = 'absolute';
             img.style.cursor = 'grab';
             img.style.userSelect = 'none';
