@@ -46,41 +46,60 @@
     </div>
 
     <script>
-        const count = 46;
+    const count = 46;
+    const items = [];
 
-        for (let i = 1; i <= count; i++) {
-            const img = document.createElement('img');
-            img.src = "/public/images/trash/trash-" + i + ".png";
-            img.style.position = 'absolute';
-            img.style.cursor = 'grab';
-            img.style.userSelect = 'none';
+    for (let i = 1; i <= count; i++) {
+        const img = document.createElement('img');
+        img.src = "/public/images/trash/trash-" + i + ".png";
+        img.style.position = 'absolute';
+        img.style.cursor = 'grab';
+        img.style.userSelect = 'none';
 
-            const size = 150 + Math.random() * 120;
-            const speed = 0.1 + Math.random() * 1;
+        const size = 150 + Math.random() * 200;
+        const speed = 0.1 + Math.random() * 1;
 
-            img.style.width = size + 'px';
+        img.style.width = size + 'px';
 
-            const x = Math.random() * (window.innerWidth - size);
-            const y = Math.random() * (window.innerHeight - size - 40);
-            let vx = (Math.random() - 0.5) * 2 * speed;
-            let vy = (Math.random() - 0.5) * 2 * speed;
+        const x = Math.random() * (window.innerWidth - size);
+        const y = Math.random() * (window.innerHeight - size - 40);
 
-            img.style.left = x + 'px';
-            img.style.top = y + 'px';
-            document.body.appendChild(img);
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
+        document.body.appendChild(img);
 
-            let cx = x, cy = y;
+        const item = {
+            el: img,
+            cx: x,
+            cy: y,
+            vx: (Math.random() - 0.5) * 2 * speed,
+            vy: (Math.random() - 0.5) * 2 * speed,
+            size: size
+        };
+
+        items.push(item);
+
+        img.onload = function() {
             function move() {
-                cx += vx; cy += vy;
-                if (cx <= 0 || cx + size >= window.innerWidth) vx *= -1;
-                if (cy <= 0 || cy + size >= window.innerHeight - 40) vy *= -1;
-                img.style.left = cx + 'px';
-                img.style.top = cy + 'px';
+                item.cx += item.vx;
+                item.cy += item.vy;
+                if (item.cx <= 0 || item.cx + item.size >= window.innerWidth) item.vx *= -1;
+                if (item.cy <= 0 || item.cy + item.size >= window.innerHeight - 40) item.vy *= -1;
+                img.style.left = item.cx + 'px';
+                img.style.top = item.cy + 'px';
                 requestAnimationFrame(move);
             }
-            img.onload = move;
-        }
-    </script>
+            move();
+        };
+    }
+
+    window.addEventListener('resize', () => {
+        items.forEach(item => {
+            if (item.cx + item.size > window.innerWidth) item.cx = window.innerWidth - item.size;
+            if (item.cy + item.size > window.innerHeight - 40) item.cy = window.innerHeight - item.size - 40;
+        });
+    });
+</script>
 
 </body>
 </html>
