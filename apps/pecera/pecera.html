@@ -142,7 +142,7 @@
     <source src="/public/incompetech.mp3" type="audio/mpeg">
 </audio>
     
-<button id="muteBtn">♪ off</button>
+<button id="muteBtn">♪ apagar</button>
 
 <script>
     const audio = document.getElementById('audio');
@@ -152,7 +152,7 @@
 
     btn.addEventListener('click', () => {
         audio.muted = !audio.muted;
-        btn.textContent = audio.muted ? '♪ on' : '♪ off';
+        btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
     });
 </script>
     
