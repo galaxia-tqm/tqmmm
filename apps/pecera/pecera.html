@@ -69,6 +69,17 @@
     letter-spacing: 0.1em;
 }
 #muteBtn:hover { opacity: 1; }
+
+        @media (max-width: 600px) {
+    .ticker-text {
+        font-size: 14px;
+    }
+    #muteBtn {
+        font-size: 14px;
+        top: 16px;
+        right: 16px;
+    }
+}
     
     </style>
 </head>
@@ -147,17 +158,23 @@
 <button id="muteBtn">♪ apagar</button>
 
 <script>
-    const audio = document.getElementById('audio');
-    const btn = document.getElementById('muteBtn');
 
-    window.addEventListener('load', () => {
+    const audio = document.getElementById('audio');
+const btn = document.getElementById('muteBtn');
+
+document.body.addEventListener('click', () => {
     audio.play();
-});
-    
-   btn.addEventListener('click', () => {
+}, { once: true });
+
+document.body.addEventListener('touchstart', () => {
+    audio.play();
+}, { once: true });
+
+btn.addEventListener('click', () => {
     audio.muted = !audio.muted;
     btn.textContent = audio.muted ? '♪ encender' : '♪ apagar';
 });
+    
 </script>
     
 </body>
