@@ -178,7 +178,7 @@
             img.style.userSelect = 'none';
             img.style.opacity = '0';
 
-            const delayTime = isMobile ? i * 1.2 : i * 2.5;
+            const delayTime = isMobile ? i * 2 : i * 3.5;
             img.style.animation = `fadein 3s ease-in-out ${delayTime}s forwards`;
 
             const minSize = isMobile ? 180 : 150;
@@ -188,8 +188,8 @@
 
             img.style.width = size + 'px';
 
-            const x = Math.random() * window.innerWidth - size * 0.3;
-            const y = Math.random() * (window.innerHeight - 40) - size * 0.3;
+            const x = Math.random() * window.innerWidth - size * 0.2;
+            const y = Math.random() * (window.innerHeight - 40) - size * 0.2;
 
             img.style.left = x + 'px';
             img.style.top = y + 'px';
@@ -210,8 +210,8 @@
                 function move() {
                     item.cx += item.vx;
                     item.cy += item.vy;
-                    if (item.cx <= 0 || item.cx + item.size >= window.innerWidth) item.vx *= -1;
-                    if (item.cy <= 0 || item.cy + item.size >= window.innerHeight - 40) item.vy *= -1;
+                    if (item.cx <= -item.size * 0.2 || item.cx + item.size >= window.innerWidth + item.size * 0.2) item.vx *= -1;
+                    if (item.cy <= -item.size * 0.2 || item.cy + item.size >= window.innerHeight - 40 + item.size * 0.2) item.vy *= -1;
                     img.style.left = item.cx + 'px';
                     img.style.top = item.cy + 'px';
                     requestAnimationFrame(move);
