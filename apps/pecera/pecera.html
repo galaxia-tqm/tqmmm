@@ -176,11 +176,13 @@
         function entrar() {
             audio.play();
             landing.style.opacity = '0';
-            setTimeout(() => { 
+           setTimeout(() => { 
         landing.style.display = 'none';
+    }, 1500);
+    setTimeout(() => {
         const ticker = document.querySelector('.ticker-wrapper');
         ticker.style.animation = 'fadein 1s ease forwards';
-    }, 1500);
+    }, 5000);
         }
 
         btn.addEventListener('click', () => {
