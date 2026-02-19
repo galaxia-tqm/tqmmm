@@ -249,8 +249,8 @@
 
             img.onload = function() {
                 function move() {
-    item.vx += (Math.random() - 0.5) * 0.05;
-    item.vy += (Math.random() - 0.5) * 0.05;
+    item.vx += (Math.random() - 0.5) * 0.01;
+    item.vy += (Math.random() - 0.5) * 0.01;
     item.vx = Math.max(-item.speed, Math.min(item.speed, item.vx));
     item.vy = Math.max(-item.speed, Math.min(item.speed, item.vy));
     item.cx += item.vx;
