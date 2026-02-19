@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>La Pecera Basurera</title>
     <style>
-        body { background: white; margin: 0; overflow: hidden; height: 100vh; }
-        .trash { position: absolute; width: 150px; cursor: grab; transition: transform 0.2s; }
+        body { background: white; margin: 0; overflow: hidden; height: 100vh; width: 100vw; }
+        .trash { 
+            position: absolute; 
+            width: 140px; 
+            cursor: grab; 
+            z-index: 10; 
+            user-select: none;
+            -webkit-user-drag: none;
+        }
         
-        /* This makes them float and drift slowly */
-        @keyframes float {
+        @keyframes drift {
             0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(100px, 50px) rotate(10deg); }
+            50% { transform: translate(70px, 40px) rotate(12deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
     </style>
 </head>
 <body>
     <script>
-        // This loop automatically adds your 46 basuritas
         for (let i = 1; i <= 46; i++) {
             const img = document.createElement('img');
-            img.src = `/images/trash/trash-${i}.png`;
+            // This is the "hidden" path
+            img.src = "/images/trash/trash-" + i + ".png"; 
             img.className = 'trash';
             
-            // Randomly scatter them across the screen
-            img.style.left = Math.random() * 90 + 'vw';
-            img.style.top = Math.random() * 90 + 'vh';
-            
-            // Give each one a different floating speed
-            img.style.animation = `float ${10 + Math.random() * 20}s infinite ease-in-out`;
+            img.style.left = Math.random() * 80 + 'vw';
+            img.style.top = Math.random() * 80 + 'vh';
+            img.style.animation = `drift ${18 + Math.random() * 20}s infinite ease-in-out`;
             img.style.animationDelay = `-${Math.random() * 20}s`;
             
             document.body.appendChild(img);
