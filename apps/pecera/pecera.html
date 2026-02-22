@@ -223,8 +223,8 @@
         const finalDelay = (i > 3 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
         img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
-        const minSize = isMobile ? 120 : 150;
-        const maxSize = isMobile ? 220 : 280;
+        const minSize = isMobile ? 80 : 100;
+        const maxSize = isMobile ? 160 : 220;
         const size = minSize + Math.random() * (maxSize - minSize);
         const speed = 0.3 + Math.random() * 0.8;
 
