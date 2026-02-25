@@ -140,7 +140,7 @@
         img.style.userSelect = 'none';
         img.style.opacity = '0';
 
-        const baseDelay = isMobile ? 7 + i * 3 : 7 + i * 2.5;
+        const baseDelay = isMobile ? 5 + i * 3 : 5 + i * 2.5;
         const finalDelay = (i > 3 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
         img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
