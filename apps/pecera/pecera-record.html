@@ -87,63 +87,7 @@
             50%       { opacity: 0.9; }
         }
 
-        /* TICKER */
-        .ticker-wrapper {
-            position: fixed;
-            bottom: env(safe-area-inset-bottom, 0px);
-            left: 0;
-            width: 100%;
-            background: transparent;
-            padding: 8px 0;
-            overflow: hidden;
-            z-index: 1000;
-            opacity: 0;
-        }
 
-        .ticker-text {
-            display: inline-block;
-            white-space: nowrap;
-            font-family: 'Courier New', monospace;
-            color: white;
-            animation: scroll-left 60s linear infinite;
-            animation-delay: 3s;
-            animation: scroll-left 60s linear infinite;
-            animation-delay: 3s;
-            font-size: 13px;
-        }
-
-        @keyframes scroll-left {
-            0%   { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* MUTE BUTTON */
-        #muteBtn {
-            position: fixed;
-            top: 12px;
-            right: 16px;
-            z-index: 200;
-            background: none;
-            border: none;
-            color: white;
-            font-family: 'Courier New', monospace;
-            cursor: pointer;
-            opacity: 0.4;
-            letter-spacing: 0.1em;
-            font-size: 13px;
-        }
-        #muteBtn:hover { opacity: 1; }
-
-        @media (max-width: 600px) {
-            .ticker-text { font-size: 16px; }
-            #muteBtn { font-size: 16px; }
-            #landing h1 { font-size: clamp(1rem, 5vw, 1.4rem); }
-            #landing button { font-size: clamp(0.8rem, 4vw, 1rem); }
-        }
-
-        @media (min-width: 601px) {
-    #muteBtn { font-size: 11px; }
-}
     </style>
 </head>
 <body>
@@ -200,8 +144,8 @@
         const finalDelay = (i > 3 && Math.random() > 0.7) ? baseDelay - 3 : baseDelay;
         img.style.animation = `fadein 3s ease-in-out ${finalDelay}s forwards`;
 
-        const minSize = isMobile ? 200 : 250;
-        const maxSize = isMobile ? 340 : 450;
+        const minSize = isMobile ? 80 : 100;
+        const maxSize = isMobile ? 160 : 200;
         const size = minSize + Math.random() * (maxSize - minSize);
         const speed = 0.3 + Math.random() * 0.8;
 
